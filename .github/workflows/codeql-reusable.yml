@@ -21,6 +21,11 @@ on:
         required: false
         default: default
         type: string
+      policy_mode:
+        description: observe, warn or block when CodeQL produces findings
+        required: false
+        default: observe
+        type: string
 permissions:
   contents: read
   security-events: write
@@ -37,9 +42,11 @@ jobs:
           PROFILE: ${{ inputs.profile }}
           MODULE_PATH: ${{ inputs.module_path }}
           QUERY_SUITE: ${{ inputs.query_suite }}
+          POLICY_MODE: ${{ inputs.policy_mode }}
         run: |
           case "$PROFILE" in java|angular) ;; *) echo 'Invalid profile'; exit 1;; esac
           case "$QUERY_SUITE" in default|security-extended) ;; *) echo 'Invalid query suite'; exit 1;; esac
+          case "$POLICY_MODE" in observe|warn|block) ;; *) echo 'Invalid policy mode'; exit 1;; esac
           if [[ ! "$MODULE_PATH" =~ ^[a-zA-Z0-9_./-]+$ || "$MODULE_PATH" == /* || "$MODULE_PATH" == *..* ]]; then
             echo 'Invalid module path'; exit 1
           fi
@@ -75,14 +82,17 @@ jobs:
         with:
           category: plard-poc/${{ inputs.profile }}
           output: codeql-sarif
-      - name: Summarize SARIF
-        uses: DavidFaustino/ssdlc-codeql-poc/actions/codeql-summary@f82a413f55866636069d07c9371be99d54f4b09e
+      - name: Summarize SARIF and evaluate policy
+        uses: DavidFaustino/ssdlc-codeql-poc/actions/codeql-summary@bf1c2a65d3b1716d6544522755961699ceada466
         with:
           sarif-directory: ${{ steps.analyze.outputs.sarif-output }}
           output-directory: codeql-summary
+          policy-mode: ${{ inputs.policy_mode }}
       - name: Save sanitized summary
+        if: ${{ always() && steps.analyze.outcome == 'success' }}
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: codeql-summary-${{ inputs.profile }}
           path: codeql-summary/
+          if-no-files-found: error
           retention-days: 14
