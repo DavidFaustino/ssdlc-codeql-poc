@@ -1,0 +1,17 @@
+name: CodeQL SARIF summary
+description: Validate SARIF and create JSON, CSV and Actions summary without changing the original report
+inputs:
+  sarif-directory:
+    description: Directory written by github/codeql-action/analyze
+    required: true
+  output-directory:
+    description: Directory for summary.json and findings.csv
+    required: true
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        SARIF_DIRECTORY: ${{ inputs.sarif-directory }}
+        SUMMARY_DIRECTORY: ${{ inputs.output-directory }}
+      run: node "${{ github.action_path }}/index.mjs" "$SARIF_DIRECTORY" "$SUMMARY_DIRECTORY"
