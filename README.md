@@ -12,6 +12,8 @@ consumidor. A action de resumo preserva o SARIF original e produz JSON/CSV.
 Os forks chamam `.github/workflows/codeql-reusable.yml` deste repositório
 por SHA. Os resultados são de laboratório, com código público e casos sintéticos.
 
+Para ver os runs, PRs e alertas em ordem, siga o [roteiro de validação](docs/roteiro-validacao.md).
+
 ## Teste local do processador
 
 ```sh
