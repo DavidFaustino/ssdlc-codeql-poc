@@ -40,7 +40,7 @@ No [PR Quarkus #2](https://github.com/DavidFaustino/codeql-poc-quarkus/pull/2), 
 | `block` | [36669367787](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/runs/36669367787) | 1 achado; análise e upload verdes; política vermelha; artifact preservado |
 | `block` após correção | [36669563099](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/runs/36669563099) | 0 achados; política e job verdes; alerta `fixed` |
 
-O check vermelho não impede merge sem uma regra de branch protection que o torne obrigatório. O PR segue draft e não deve ser mesclado.
+O check vermelho não impede merge sem uma regra de proteção que o torne obrigatório. O [merge protection nativo de Code scanning](https://docs.github.com/en/code-security/concepts/code-scanning/merge-protection) é outra alternativa a avaliar, separada deste check customizado. O PR segue draft e não deve ser mesclado.
 
 ## 5. O que ainda exige a organização Plard
 

@@ -24,7 +24,7 @@ O workflow reutilizável recebe `policy_mode: observe | warn | block` (padrão `
 | `warn` | Anotação warning; job passa | Job passa |
 | `block` | Anotação error; job falha | Job passa |
 
-Falha de análise, SARIF ausente/inválido ou modo desconhecido é **falha técnica**, nunca zero achados. O upload do SARIF pelo CodeQL precede a política; o artifact de resumo é salvo mesmo quando `block` falha. A falha do job **não bloqueia merge por si só**: o check precisa ser obrigatório na regra de proteção do repositório. A escolha de modo para a organização Plard permanece pendente de decisão SSDLC/Foundation.
+Falha de análise, SARIF ausente/inválido ou modo desconhecido é **falha técnica**, nunca zero achados. O upload do SARIF pelo CodeQL precede a política; o artifact de resumo é salvo mesmo quando `block` falha. A falha do job **não bloqueia merge por si só**: para impor este gate, o check precisa ser obrigatório na regra de proteção. Alternativamente, o GitHub oferece [merge protection por alerta de Code scanning](https://docs.github.com/en/code-security/concepts/code-scanning/merge-protection), uma política distinta do check customizado. A escolha para a organização Plard permanece pendente de decisão SSDLC/Foundation.
 
 ## Teste local do processador
 
