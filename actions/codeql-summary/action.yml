@@ -7,6 +7,10 @@ inputs:
   output-directory:
     description: Directory for summary.json and findings.csv
     required: true
+  policy-mode:
+    description: observe, warn or block when SARIF contains findings
+    required: false
+    default: observe
 runs:
   using: composite
   steps:
@@ -15,3 +19,8 @@ runs:
         SARIF_DIRECTORY: ${{ inputs.sarif-directory }}
         SUMMARY_DIRECTORY: ${{ inputs.output-directory }}
       run: node "${{ github.action_path }}/index.mjs" "$SARIF_DIRECTORY" "$SUMMARY_DIRECTORY"
+    - shell: bash
+      env:
+        SUMMARY_DIRECTORY: ${{ inputs.output-directory }}
+        POLICY_MODE: ${{ inputs.policy-mode }}
+      run: node "${{ github.action_path }}/policy.mjs" "$SUMMARY_DIRECTORY/summary.json" "$POLICY_MODE"
