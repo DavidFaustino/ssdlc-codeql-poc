@@ -14,6 +14,18 @@ por SHA. Os resultados são de laboratório, com código público e casos sinté
 
 Para ver os runs, PRs e alertas em ordem, siga o [roteiro de validação](docs/roteiro-validacao.md).
 
+## Política de laboratório
+
+O workflow reutilizável recebe `policy_mode: observe | warn | block` (padrão `observe`). A decisão usa **qualquer achado** presente no SARIF válido, sem limiar de severidade nesta PoC:
+
+| Modo | Com achado | Sem achado |
+|---|---|---|
+| `observe` | Anotação informativa; job passa | Job passa |
+| `warn` | Anotação warning; job passa | Job passa |
+| `block` | Anotação error; job falha | Job passa |
+
+Falha de análise, SARIF ausente/inválido ou modo desconhecido é **falha técnica**, nunca zero achados. O upload do SARIF pelo CodeQL precede a política; o artifact de resumo é salvo mesmo quando `block` falha. A falha do job **não bloqueia merge por si só**: o check precisa ser obrigatório na regra de proteção do repositório. A escolha de modo para a organização Plard permanece pendente de decisão SSDLC/Foundation.
+
 ## Teste local do processador
 
 ```sh

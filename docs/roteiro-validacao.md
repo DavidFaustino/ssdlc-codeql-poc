@@ -29,6 +29,19 @@ node scripts/export-code-scanning.mjs DavidFaustino/codeql-poc-quarkus ./exports
 
 O CSV/JSON é um retrato no momento da coleta, não uma trilha de auditoria completa. `most_recent_instance.commit_sha` aponta para a última ocorrência do achado, não necessariamente para o commit que o corrigiu.
 
-## 4. O que ainda exige a organização Plard
+## 4. Simular a política de decisão
+
+No [PR Quarkus #2](https://github.com/DavidFaustino/codeql-poc-quarkus/pull/2), compare estes runs em ordem. Os três primeiros têm o mesmo SQL injection; apenas `policy_mode` muda. O quarto corrige o código e mantém `block`.
+
+| Modo | Run | O que procurar |
+|---|---|---|
+| `observe` | [36668979579](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/runs/36668979579) | 1 achado; anotação `notice`; job verde |
+| `warn` | [36669175570](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/runs/36669175570) | 1 achado; anotação `warning`; job verde |
+| `block` | [36669367787](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/runs/36669367787) | 1 achado; análise e upload verdes; política vermelha; artifact preservado |
+| `block` após correção | [36669563099](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/runs/36669563099) | 0 achados; política e job verdes; alerta `fixed` |
+
+O check vermelho não impede merge sem uma regra de branch protection que o torne obrigatório. O PR segue draft e não deve ser mesclado.
+
+## 5. O que ainda exige a organização Plard
 
 Security overview organizacional, cobertura de repositórios, visões gerenciais consolidadas, política de gate/merge, retenção, permissões e comparação lado a lado com Fortify não foram validados nesta conta pessoal. No piloto corporativo, confirmar acesso/licença primeiro; então repetir os mesmos passos em repositórios representativos e registrar escopo, commit, módulo e runner.
