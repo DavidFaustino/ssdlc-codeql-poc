@@ -19,4 +19,17 @@ node --test test/*.test.mjs
 ```
 
 Use Node.js 24. Nenhum segredo é necessário para os scripts de resumo.
+
+## Exportar estados de alertas
+
+Com `gh` autenticado, executar:
+
+```sh
+node scripts/export-code-scanning.mjs DavidFaustino/codeql-poc-quarkus ./exports/quarkus
+node scripts/export-code-scanning.mjs DavidFaustino/codeql-poc-angular ./exports/angular
+```
+
+Os arquivos `alerts.json` e `alerts.csv` mostram o estado observado no momento
+da coleta. Eles não substituem o histórico de análises nem provam cobertura.
+Não coloque o token do GitHub na linha de comando ou nos artefatos.
 PoC de CodeQL SAST reutilizável para Quarkus e Angular
