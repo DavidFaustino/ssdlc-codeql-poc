@@ -82,6 +82,13 @@ jobs:
         with:
           category: plard-poc/${{ inputs.profile }}
           output: codeql-sarif
+      - name: Save complete SARIF
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: codeql-sarif-${{ inputs.profile }}
+          path: ${{ steps.analyze.outputs.sarif-output }}
+          if-no-files-found: error
+          retention-days: 14
       - name: Summarize SARIF and evaluate policy
         uses: DavidFaustino/ssdlc-codeql-poc/actions/codeql-summary@bf1c2a65d3b1716d6544522755961699ceada466
         with:
