@@ -2,6 +2,8 @@
 
 Use a conta GitHub autorizada para ver Code scanning. Este é um laboratório público com controles sintéticos, não um painel corporativo Plard. Não faça merge dos PRs draft nem deploy dos casos de controle.
 
+Para entender a sequência completa dos experimentos e seus limites, abra o [registro do laboratório local](../laboratorio-local/README.md).
+
 ## 1. Execução e resumo
 
 Abra [Actions no Quarkus](https://github.com/DavidFaustino/codeql-poc-quarkus/actions/workflows/wf-codeql-poc.yml) ou [Actions no Angular](https://github.com/DavidFaustino/codeql-poc-angular/actions/workflows/wf-codeql-poc.yml). Compare a baseline, o run com achado e o run após correção. No job `codeql`, veja as etapas de build, `Analyze and upload CodeQL results` e `Summarize SARIF`. O resumo do job mostra contagens; o artifact `codeql-summary-*` contém JSON/CSV por 14 dias.

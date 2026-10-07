@@ -2,7 +2,13 @@
 
 Workflow reutilizável de CodeQL para os forks Quarkus e Angular da PoC Plard.
 O resultado do scanner aparece em **Security → Code scanning** do repositório
-consumidor. A action de resumo preserva o SARIF original e produz JSON/CSV.
+consumidor. A action de resumo processa o SARIF e produz JSON/CSV. O artifact
+SARIF integral foi testado em uma branch experimental, ainda fora de `main`.
+
+## Navegação da PoC
+
+- [Laboratório local](laboratorio-local/README.md) — processo executado, arquitetura, linha do tempo e evidências.
+- [Piloto P](piloto-p/README.md) — plano para validação futura em repositórios reais; não executado.
 
 ## Repositórios
 
